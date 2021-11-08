@@ -1,5 +1,5 @@
 # iauthcs.go
-How "Do" you do ***payment authorization, authorization reversal, payment capture and card tokenization*** (payments) on the Cybersource gateway using golang? 
+How "Do" you do payments - "payment authorization", "authorization reversal" & "payment capture" on the Cybersource gateway using golang? 
 You make ````iauthcs```` your friend.
 
 ```iauthcs``` is short for ***i***t's ***a***ll ***u***nder ***t***he ***h***ood for [Cybersource REST API](https://developer.cybersource.com/api-reference-assets/index.html). 
@@ -47,7 +47,7 @@ That's how ````iauthcs```` wants you the Go developer to "Do" payments.
 # Usage #
 
 
-## Connect with the your merchant credentials you obtained in step 1 above ##
+## Gateway connection ##
 You must create a connection first to avoid errors. Use ```DoGWConnect``` to create your gateway connection. 
 You can dynamically switch connection between environments (test & prod) using ```DoGWConnect``` 
 
@@ -160,20 +160,25 @@ Details on card tokenization coming soon.
 The features you can find under the hood are;
 
 - Dynamic context switching
+
 ```iauthcs``` is context aware and it supports service environment and service endpoint contexts. 
+This means you can you perform a transaction, then switch to another environment and/or endpoint, and perform the same or different
+transaction without break. It is useful in many use cases e.g regression testing, tokenization, failover handling to name a few.
+
 Dynamic context switching is implemented by two functions for environment and endpoint respectively
 ```
 DoGWConnect(): switch environment context from test to prod and vice-visa
 DoSwitchTo(): switches service endpoint context between "PAYMENT|REVERSAL|CAPTURE|TOKEN"
 ```
-- Behavior parameterization
+- Parameterization
+
 The behavior of the package can be modified with the following parameter;
 ```
-        type GWConfig struct {
-                DumpPayload bool        //dumps the http request and response. great for debugging
-                AutoGenTransactId bool  //auto generates a unique transaction id for each payment auth
-                LogToFile string        //logs all transactions to file specified
-        }
+type GWConfig struct {
+        DumpPayload bool        //dumps the http request and response. great for debugging
+        AutoGenTransactId bool  //auto generates a unique transaction id for each payment auth
+        LogToFile string        //logs all transactions to file specified
+}
 ```
 
 
