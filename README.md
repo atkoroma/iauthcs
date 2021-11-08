@@ -63,7 +63,7 @@ A payment authorization transaction requires the parameters: ***cardnumber, expi
 
       p := iauthcs.DoPayAuthorization("4111111111111111","10","2028","195","985.90")
 
-```DoPayAuthorization``` will return an authorization response of type PayResponse where "p" above, will contain the following fields;
+```DoPayAuthorization``` will return an authorization response of type PayResponse, where "p" above, will contain the following fields;
 
         type PayResponse struct {
                 AuthReversalMethod string
@@ -99,7 +99,7 @@ An authorization reversal transaction requires the parameters: ***href_from_auth
 
       r := iauthcs.DoAuthReversal(p.AuthReversalHref, p.OrderAmt)
 
-```DoAuthReversal``` will return an authorization reversal response of type RebResponse where "r" above, will contain the following fields;
+```DoAuthReversal``` will return an authorization reversal response of type RebResponse, where "r" above, will contain the following fields;
 
         type RevResponse struct {
                 RevSelfMeth string
@@ -123,7 +123,7 @@ A payment capture transaction requires the parameters: ***href_from_auth, order_
 
       c := iauthcs.DoPaymentCapture(p.CaptureHref, p.OrderAmt)
 
-```DoPaymentCapture``` will return a payment capture response of type CapResponse where "c" above, will contain the following fields;
+```DoPaymentCapture``` will return a payment capture response of type CapResponse, where "c" above, will contain the following fields;
 
         type CapResponse struct {
                 VoidMeth string
@@ -147,7 +147,7 @@ A tokenize card transaction requires the parameters: *** ***.
 
       t := iauthcs.DoCardTokenize()
 
-```DoCardTokenize``` will return an payment capture response of type ToxResponse where "t" above, will contain the following fields;
+```DoCardTokenize``` will return a card tokenize response of type ToxResponse, where "t" above, will contain the following fields;
 
         type ToxResponse struct {
              . . . .
