@@ -156,7 +156,7 @@ Details on card tokenization coming soon.
 
 ## Technical support information ##
 
-| Service   | Description | Based on version  |
+| Description   | Service | Based on version  |
 | ------------- | ------------- |---------------|
 | Authorization  | Payments  |       v2         |
 | Reversal  | Payments  |       v2         |
