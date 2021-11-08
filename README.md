@@ -163,4 +163,6 @@ Details on card tokenization coming soon.
 | Capture  | Payments        |       v2         |
 | Flex  | Token Management   |       v1         |
 
-***Go Do payments and enjoy it***
+
+
+***Go Do payments and enjoy it!!***
