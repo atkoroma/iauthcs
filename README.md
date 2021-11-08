@@ -123,7 +123,7 @@ A payment capture transaction requires the parameters: ***href_from_auth, order_
 
       c := iauthcs.DoPaymentCapture(p.CaptureHref, p.OrderAmt)
 
-```DoPaymentCapture``` will return an payment capture response of type CapResponse where "c" above, will contain the following fields;
+```DoPaymentCapture``` will return a payment capture response of type CapResponse where "c" above, will contain the following fields;
 
         type CapResponse struct {
                 VoidMeth string
