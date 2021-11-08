@@ -34,7 +34,7 @@ That's how ````iauthcs```` wants you the Go developer to "Do" payments.
 
 ##### 1. Create a [Cybersource merchant account](https://ebc2.cybersource.com/ebc2/registration/external) that will provide you with the following; #####
 
-        merchant id, merchant key and merchant secret key
+        merchant-id, merchant-key & merchant-secret-key
 
 ##### 2. Download ```iauthcs.go``` package #####
 
