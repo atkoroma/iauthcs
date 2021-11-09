@@ -19,9 +19,9 @@ func main() {
 
 	// client connection parameters
 	cshost := "apitest.cybersource.com"
-	merchantid := "mockchant"
-	merchantkey := "b9bfa32a-c79c-4e7a-91b7-591b33764a53"
-	merchantsec := "CaODdX2A9j3KkEa+oMz/HRXt0511uIDjzB8o/hN4SgA="
+	merchantid := "your-chosen-merchant-idd"
+	merchantkey := "your-assigned-merchant-key"
+	merchantsec := "your-assigned-merchant-secret-key"
 
 	// connect to gateway with iauthcs
 	iauthcs.DoGWConnect(cshost, merchantid, merchantkey, merchantsec)
