@@ -1,33 +1,36 @@
-# iauthcs.go
-How "Do" you do payments - "payment authorization", "authorization reversal" & "payment capture" on the Cybersource gateway using golang? 
-You make ````iauthcs```` your friend.
+# iAuth-CS
+iAuth-CS is a Golang payment library for the Cybersource REST API. It exposes capabilities for "payment authorization", "authorization reversal", "payment capture" & "card tokenization". They are available through a simple set of easy-to-use functions, that could get you accepting card payments sooner than anticipated. 
+
+If you're a Golang developer looking for ready-to-integrate payment library...then make ````iauthcs```` your friend.
 
 ```iauthcs``` is short for ***i***t's ***a***ll ***u***nder ***t***he ***h***ood for [Cybersource REST API](https://developer.cybersource.com/api-reference-assets/index.html). 
 Cybersource provides REST APIs to integrate with its payment gateway services. The integration can be difficult-ish to accomplish from scratch.
-Going through the tidious coding process, I decided to provide a much simpler way that take the borden off, of you the Go developer.
+Going through the tedious coding process, I decided to provide a much simpler way that take the borden off, of you the Go developer.
 
-Don't the intimidated by the long literature, there are only four(4) functions to use. The rest is explaining what is under the hood.
+Don't the intimidated by the long literature, there are only four(4) functions to use. The rest are requests and responses.
 This has to be the simplest payment gateway integration out there, it will enable you to accept payments is minutes...
 
-***It's all under the hood*** means you will ***NOT*** have to...
-- build payloads
+***It's all under the hood*** means you will ***Not*** have to...
+- Build payloads
 - Sign your data
 - Decode, encode and encrypt your data
 - Message digest your payload and a few more...
 
-For simplicity, it exposes one function per payment transaction type as listed below.
+## Functions() ##
+For the sake of simplicity, ```iauthcs``` exposes one function per payment transaction type as listed below.
 
-## Functions ##
+```DoPaymentAuth()``` - sends a payment authorization (with card details) and returns the gateway response 
 
-``` 
-DoPaymentAuth() - sends a payment authorization and returns the gateway response 
-DoPaymentCapture() - sends a payment capture and returns the gateway response
-DoAuthReversal() - sends a payment authorization reversal request and returns the gateway response
-DoCardTokenize() - generates a pubkey, encrypts the card, request to tokenize and returns the gateway response
-```
-````iauthcs```` allows the developer to truely focus on the application rather than back-end heavy weight-lifting. 
+```DoPaymentCapture()``` - sends a payment capture and returns the gateway response
 
-That's how ````iauthcs```` wants you the Go developer to "Do" payments.
+```DoAuthReversal()``` - sends a payment authorization reversal request and returns the gateway response
+
+```DoCardTokenize()``` - generates pubkey, encrypts card, requests a token and returns the gateway response
+
+
+iAuth-CS allows the developer to truely focus on the application rather than back-end heavy weight-lifting. 
+
+_That's how we wants you the Go developer to Do payments_
 
 # Getting started #
 **Here's how you can integrate with Cybersource in the shortest time.**
@@ -47,7 +50,7 @@ That's how ````iauthcs```` wants you the Go developer to "Do" payments.
 # Usage #
 
 
-## Gateway connection ##
+## Gateway connect ##
 You must create a connection first to avoid errors. Use ```DoGWConnect``` to create your gateway connection. 
 You can dynamically switch connection between environments (test & prod) using ```DoGWConnect``` 
 
@@ -59,7 +62,7 @@ You can dynamically switch connection between environments (test & prod) using `
         iauthcs.DoGWConnect(cshost, merchantid, merchantkey, merchantsec)
         
 ## Process a payment ##
-A payment authorization transaction requires the parameters: ***cardnumber, expiry_month, expiry_year, secret_code, order_amount***.
+A payment authorization transaction requires the parameters: ***card_number, expiry_month, expiry_year, secret_code, order_amount***.
 
       p := iauthcs.DoPayAuthorization("4111111111111111","10","2028","195","985.90")
 
@@ -92,7 +95,7 @@ A payment authorization transaction requires the parameters: ***cardnumber, expi
                 ErrorMessage string
         }
 
-See file ````iauthcs_sample.go```` for a working example
+See file [iauthcs_sample.go](https://github.com/atkoroma/iauthcs/iauthcs_sample.go) for a working example
 
 ## Process a reversal ##
 An authorization reversal transaction requires the parameters: ***href_from_auth, order_amount***.
@@ -112,7 +115,7 @@ An authorization reversal transaction requires the parameters: ***href_from_auth
                 ReversedCur string
                 ResponseStatus string
                 SubmitTimeUtc string
-                ErrorMsg string
+                ErrorMessage string
         }
 
 
@@ -137,7 +140,7 @@ A payment capture transaction requires the parameters: ***href_from_auth, order_
                 ReconciliationId string
                 ResponseStatus string
                 SubmitTimeUtc string
-                ErrorMsg string
+                ErrorMessage string
         }
 See file ````iauthcs_sample.go```` for a working example
 
@@ -154,10 +157,14 @@ A tokenize card transaction requires the parameters: *** ***.
         }
 
 
-Details on card tokenization coming soon.
+_Details on card tokenization coming soon or contact me to share your interest._
 
 ## Key features under the hood... ##
 The features you can find under the hood are;
+
+- Zero integration code
+
+The developer do not have to write gateway integration code...it's all under the hood. This is all handled by ```DoGWConnet``` which only requires your credentials.
 
 - Dynamic context switching
 
@@ -185,17 +192,17 @@ type GWConfig struct {
 
 ## Technical support information ##
 
-| Description   | Service | Based on version  |
+| Description   | Service | Based on  |
 | ------------- | ------------- |---------------|
 | Authorization  | Payments  |       v2         |
 | Reversal  | Payments  |       v2         |
 | Capture  | Payments        |       v2         |
 | Flex  | Token Management   |       v1         |
-| Hash algorithm  |  Payments  |       HmacSHA256         |
+| Message authentication  |  Payments  |       HmacSHA256         |
 | Message digest  | Payments   |       SHA256         |
 | Card encryption  | Token management   |       rsa.EncryptOAEP   |
 
 
-```
-Go Do payments and enjoy it!!
-```
+
+***Go Do payments and enjoy it!!***
+
