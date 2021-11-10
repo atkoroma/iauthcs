@@ -49,7 +49,6 @@ _That's how we wants you the Go developer to Do payments_
 
 # Usage #
 
-
 ## Gateway connect ##
 You must create a connection first to avoid errors. Use ```DoGWConnect``` to create your gateway connection. 
 You can dynamically switch connection between environments (test & prod) using ```DoGWConnect``` 
