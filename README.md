@@ -95,7 +95,7 @@ A payment authorization transaction requires the parameters: ***card_number, exp
                 ErrorMessage string
         }
 
-See file [iauthcs_sample.go](https://github.com/atkoroma/iauthcs/iauthcs_sample.go) for a working example
+See [iauthcs_sample.go](https://github.com/atkoroma/iauthcs/blob/iauthcs/iauthcs_sample.go) for a working sample code
 
 ## Process a reversal ##
 An authorization reversal transaction requires the parameters: ***href_from_auth, order_amount***.
@@ -119,7 +119,7 @@ An authorization reversal transaction requires the parameters: ***href_from_auth
         }
 
 
-See file ````iauthcs_sample.go```` for a working example
+See [iauthcs_sample.go](https://github.com/atkoroma/iauthcs/blob/iauthcs/iauthcs_sample.go) for a working sample code
 
 ## Process a capture ##
 A payment capture transaction requires the parameters: ***href_from_auth, order_amount***.
@@ -142,7 +142,8 @@ A payment capture transaction requires the parameters: ***href_from_auth, order_
                 SubmitTimeUtc string
                 ErrorMessage string
         }
-See file ````iauthcs_sample.go```` for a working example
+
+See [iauthcs_sample.go](https://github.com/atkoroma/iauthcs/blob/iauthcs/iauthcs_sample.go) for a working sample code
 
 
 ## Card tokenization ##
