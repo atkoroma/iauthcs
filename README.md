@@ -7,7 +7,7 @@ If you're a Golang developer looking for ready-to-integrate payment library...th
 Cybersource provides REST APIs to integrate with its payment gateway services. The integration can be difficult-ish to accomplish from scratch.
 Going through the tedious coding process, I decided to provide a much simpler way that take the borden off, of you the Go developer.
 
-Don't the intimidated by the long literature, there are only four(4) functions to use. The rest are requests and responses.
+Don't the intimidated by the long literature, there are only four(4) functions to use. The rest are requests and response outputs.
 This has to be the simplest payment gateway integration out there, it will enable you to accept payments is minutes...
 
 ***It's all under the hood*** means you will ***Not*** have to...
@@ -17,29 +17,29 @@ This has to be the simplest payment gateway integration out there, it will enabl
 - Message digest your payload and a few more...
 
 ## Functions() ##
-For the sake of simplicity, ```iauthcs``` exposes one function per payment transaction type as listed below.
+For the simplicity sakes, ```iauthcs``` exposes a function per payment transaction type as listed below.
 
-```DoPaymentAuth()``` - sends a payment authorization (with card details) and returns the gateway response 
+- DoPaymentAuth() - sends a payment authorization (with card details) and returns the gateway response 
 
-```DoPaymentCapture()``` - sends a payment capture and returns the gateway response
+- DoPaymentCapture() - sends a payment capture and returns the gateway response
 
-```DoAuthReversal()``` - sends a payment authorization reversal request and returns the gateway response
+- DoAuthReversal() - sends a payment authorization reversal request and returns the gateway response
 
-```DoCardTokenize()``` - generates pubkey, encrypts card, requests a token and returns the gateway response
+- DoCardTokenize() - generates pubkey, encrypts card, requests a token and returns the gateway response
 
 
-iAuth-CS allows the developer to truely focus on the application rather than back-end heavy weight-lifting. 
+iAuth-CS allows the developer to truely focus on the application rather than back-end heavy weight calls. 
 
-_That's how we wants you the Go developer to Do payments_
+_That's how we want you the Go developer to Do payments_
 
 # Getting started #
 **Here's how you can integrate with Cybersource in the shortest time.**
 
-##### 1. Create a [Cybersource merchant account](https://ebc2.cybersource.com/ebc2/registration/external) that will provide you with the following; #####
+##### 1. Create a [Cybersource merchant account](https://ebc2.cybersource.com/ebc2/registration/external) which will provide you with the following; #####
 
         merchant-id, merchant-key & merchant-secret-key
 
-##### 2. Download ```iauthcs.go``` package #####
+##### 2. Download ```iauthcs.go``` package from github #####
 
         go get github.com/atkoroma/iauthcs
 
@@ -50,8 +50,7 @@ _That's how we wants you the Go developer to Do payments_
 # Usage #
 
 ## Gateway connect ##
-You must create a connection first to avoid errors. Use ```DoGWConnect``` to create your gateway connection. 
-You can dynamically switch connection between environments (test & prod) using ```DoGWConnect``` 
+A gateway connect call is required in order to pass your merchant credentials for later internal use by the library. 
 
         cshost := "apitest.cybersource.com"
         merchantid := "enter_cybersource_assigned_merchant_id"
@@ -61,13 +60,15 @@ You can dynamically switch connection between environments (test & prod) using `
         iauthcs.DoGWConnect(cshost, merchantid, merchantkey, merchantsec)
         
 ## Process a payment ##
-A payment authorization transaction requires the parameters: ***card_number, expiry_month, expiry_year, secret_code, order_amount***.
+A payment authorization request:
 
-      p := iauthcs.DoPayAuthorization("4111111111111111","10","2028","195","985.90")
+        p := iauthcs.DoPayAuthorization(card_number, expiry_month, expiry_year, secret_code, order_amount)
 
-```DoPayAuthorization``` will return an authorization response of type PayResponse, where "p" above, will contain the following fields;
+Payment authorization response:
 
-        type PayResponse struct {
+Response is a data struct of type PayResponse, where "p" above, will contain the following fields;
+
+        PayResponse {
                 AuthReversalMethod string
                 AuthReversalHref string
                 SelfMeth string
@@ -97,13 +98,15 @@ A payment authorization transaction requires the parameters: ***card_number, exp
 See [iauthcs_sample.go](https://github.com/atkoroma/iauthcs/blob/iauthcs/iauthcs_sample.go) for a working sample code
 
 ## Process a reversal ##
-An authorization reversal transaction requires the parameters: ***href_from_auth, order_amount***.
+An authorization reversal transaction request:
 
       r := iauthcs.DoAuthReversal(p.AuthReversalHref, p.OrderAmt)
 
-```DoAuthReversal``` will return an authorization reversal response of type RebResponse, where "r" above, will contain the following fields;
+An authorization reversal response:
 
-        type RevResponse struct {
+Response is a data struct of type RevResponse, where "r" above, will contain the following fields;
+
+        RevResponse  {
                 RevSelfMeth string
                 RevSelfHref string
                 ClientRefId string
@@ -121,13 +124,16 @@ An authorization reversal transaction requires the parameters: ***href_from_auth
 See [iauthcs_sample.go](https://github.com/atkoroma/iauthcs/blob/iauthcs/iauthcs_sample.go) for a working sample code
 
 ## Process a capture ##
-A payment capture transaction requires the parameters: ***href_from_auth, order_amount***.
+A payment capture transaction request:
 
       c := iauthcs.DoPaymentCapture(p.CaptureHref, p.OrderAmt)
 
-```DoPaymentCapture``` will return a payment capture response of type CapResponse, where "c" above, will contain the following fields;
+A payment capture response:
 
-        type CapResponse struct {
+Response is a data struct of type CapResponse, where "c" above, will contain the following fields;
+
+
+        CapResponse {
                 VoidMeth string
                 VoidHref string
                 SelfMeth string
@@ -150,38 +156,41 @@ A tokenize card transaction requires the parameters: *** ***.
 
       t := iauthcs.DoCardTokenize()
 
-```DoCardTokenize``` will return a card tokenize response of type ToxResponse, where "t" above, will contain the following fields;
+A payment capture response:
 
-        type ToxResponse struct {
+Response is a data struct of type ToxResponse, where "t" above, will contain the following fields;
+
+        ToxResponse {
              . . . .
         }
-
 
 _Details on card tokenization coming soon or contact me to share your interest._
 
 ## Key features under the hood... ##
-The features you can find under the hood are;
+The prominent features of the library are;
 
-- Zero integration code
+#### Zero integration code ####
 
-The developer do not have to write gateway integration code...it's all under the hood. This is all handled by ```DoGWConnet``` which only requires your credentials.
+The developer do not write any gateway integration code. If you noticed, the functions are transactional. It's basically a connect-and-transact concept.
 
-- Dynamic context switching
+#### Dynamic context switching ####
 
 ```iauthcs``` is context aware and it supports service environment and service endpoint contexts. 
 This means you can you perform a transaction, then switch to another environment and/or endpoint, and perform the same or different
-transaction without break. It is useful in many use cases e.g regression testing, tokenization, failover handling to name a few.
+transaction without break. It is useful in many use cases e.g regression testing and failover handling. I used it to implement the card tokenization
+where, you first generate a key with data received from the key endpoint, to encrypt the card data for tokenization request to the token endpoint.
+But don't worry about such stuff, it's all under the hood :)
 
-Dynamic context switching is implemented by two functions for environment and endpoint respectively
+Dynamic context switching is implemented by two functions for environment and endpoint respectively 
 ```
 DoGWConnect(): switch environment context from test to prod and vice-visa
 DoSwitchTo(): switches service endpoint context between "PAYMENT|REVERSAL|CAPTURE|TOKEN"
 ```
-- Parameterization
+#### Parameterization ####
 
-The behavior of the package can be modified with the following parameter;
+The behavior of the library can be modified with the following parameter;
 ```
-type GWConfig struct {
+GWConfig {
         DumpPayload bool        //dumps the http request and response. great for debugging
         AutoGenTransactId bool  //auto generates a unique transaction id for each payment auth
         LogToFile string        //logs all transactions to file specified
