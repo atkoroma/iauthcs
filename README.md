@@ -32,6 +32,8 @@ iAuth-CS allows the developer to truely focus on the application rather than bac
 
 _That's how we want you the Go developer to Do payments_
 
+![overview](https://github.com/atkoroma/iauthcs/blob/iauthcs/iauthcs_arch.png)
+
 # Getting started #
 **Here's how you can integrate with Cybersource in the shortest time.**
 
@@ -70,14 +72,14 @@ Response is a data struct of type PayResponse, where "p" above, will contain the
 
         PayResponse {
                 AuthReversalMethod string
-                AuthReversalHref string
+                AuthReversalHref string         //this value is required to reverse this transaction using DoAuthReversal 
                 SelfMeth string
                 SelfHref string
-                CaptureMeth string
-                CaptureHref string
+                CaptureMeth string      
+                CaptureHref string              //this value is required to capture this transaction using DoPayCapture  
                 ClientRefId string
                 TransactId string
-                Orderamt string
+                Orderamt string                 //this is the pairing value expected in either of the above transactions 
                 OrderCur string
                 CardType string
                 TokenType string
@@ -179,7 +181,7 @@ The developer do not write any gateway integration code. If you noticed, the fun
 This means you can you perform a transaction, then switch to another environment and/or endpoint, and perform the same or different
 transaction without break. It is useful in many use cases e.g regression testing and failover handling. I used it to implement the card tokenization
 where, you first generate a key with data received from the key endpoint, to encrypt the card data for tokenization request to the token endpoint.
-But don't worry about such stuff, it's all under the hood :)
+But you don't have to worry about such stuff, it's taken care of when you call ```DoCardTokenize```
 
 Dynamic context switching is implemented by two functions for environment and endpoint respectively 
 ```
