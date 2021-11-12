@@ -179,7 +179,9 @@ The developer do not write any gateway integration code. If you noticed, the fun
 
 ```iauthcs``` is context aware and it supports service environment and service endpoint contexts. 
 This means you can you perform a transaction, then switch to another environment and/or endpoint, and perform the same or different
-transaction without break. It is useful in many use cases e.g regression testing and failover handling. I used it to implement the card tokenization
+transaction without break. It is useful in many use cases e.g regression testing and failover handling. 
+
+It's used to implement the card tokenization in this library
 where, you first generate a key with data received from the key endpoint, to encrypt the card data for tokenization request to the token endpoint.
 But you don't have to worry about such stuff, it's taken care of when you call ```DoCardTokenize```
 
