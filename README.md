@@ -7,8 +7,10 @@ If you're a Golang developer looking for ready-to-integrate payment library...th
 Cybersource provides REST APIs to integrate with its payment gateway services. The integration can be difficult-ish to accomplish from scratch.
 Going through the tedious coding process, I decided to provide a much simpler way that take the borden off, of you the Go developer.
 
-Don't the intimidated by the long literature, there are only four(4) functions to use. The rest are requests and response outputs.
-This has to be the simplest payment gateway integration out there, it will enable you to accept payments is minutes...
+Don't the intimidated by the long literature, there are only four(4) functions to use. For instance, when a customer pays with a credit card, you use ```DoPayAuthorization``` 
+to reserve the funds. If for some reason they returned the goods, then you reverse the funds using ```DoAuthReversal```. Sometime in the night, you will have to ```DoPayCapture``` so that the reserved funds are paid to the merchant's account (see request and response outputs under "Process a ..." section).
+
+This has to be one of the simplest payment gateway integrations out there, it will enable you to accept payments is minutes...
 
 ***It's all under the hood*** means you will ***Not*** have to...
 - Build payloads
@@ -16,8 +18,8 @@ This has to be the simplest payment gateway integration out there, it will enabl
 - Decode, encode and encrypt your data
 - Message digest your payload and a few more...
 
-## Functions() ##
-For the simplicity sakes, ```iauthcs``` exposes a function per payment transaction type as listed below.
+## functions() ##
+For the simplicity sake, ```iauthcs``` exposes a function per payment transaction type as listed below.
 
 - DoPaymentAuth() - sends a payment authorization (with card details) and returns the gateway response 
 
