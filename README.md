@@ -32,6 +32,8 @@ iAuth-CS allows the developer to truely focus on the application rather than bac
 
 _That's how we want you the Go developer to Do payments_
 
+## How iAuthCS can be implemented ##
+
 ![overview](https://github.com/atkoroma/iauthcs/blob/iauthcs/iauthcs_arch.png)
 
 # Getting started #
